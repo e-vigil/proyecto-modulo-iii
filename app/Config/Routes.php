@@ -2,6 +2,9 @@
 
 namespace Config;
 
+use App\Controllers\Auth;
+use App\Controllers\Home;
+
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
@@ -35,7 +38,14 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+$routes->addRedirect('/', '/login');
+
+// Login
+$routes->match(['get', 'post'], '/login', [Auth::class, 'login']);
+$routes->get('/logout', [Auth::class, 'logout']);
+
+// dashboard
+$routes->get('/dashboard', [Home::class, 'index'], ['filter' => 'auth']);
 
 /*
  * --------------------------------------------------------------------
