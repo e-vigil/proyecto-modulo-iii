@@ -30,6 +30,12 @@ class Auth extends BaseController
 
             if (isset($user)) {
 
+                if (!$user['activo'])
+                    return redirect()->to('/login')->with('msg', [
+                        'type' => 'danger',
+                        'content' => 'Usuario bloqueado'
+                    ]);
+
                 $hashedPassword = $user['contrasenia'];
                 $passwordVerified = password_verify($password, $hashedPassword);
 

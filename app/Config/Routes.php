@@ -4,6 +4,7 @@ namespace Config;
 
 use App\Controllers\Auth;
 use App\Controllers\Home;
+use App\Controllers\Usuario;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
@@ -46,6 +47,14 @@ $routes->get('/logout', [Auth::class, 'logout']);
 
 // dashboard
 $routes->get('/dashboard', [Home::class, 'index'], ['filter' => 'auth']);
+
+// usuarios
+$routes->get('/usuarios', [Usuario::class, 'index'], ['filter' => 'auth-admin']);
+$routes->get('/usuarios/detalles/(:num)', [Usuario::class, 'detalles/$1'], ['filter' => 'auth-admin']);
+$routes->match(['get', 'post'], '/usuarios/agregar', [Usuario::class, 'agregar'], ['filter' => 'auth-admin']);
+$routes->match(['get', 'post'], '/usuarios/editar/(:num)', [Usuario::class, 'editar/$1'], ['filter' => 'auth-admin']);
+$routes->get('/usuarios/eliminar/(:num)', [Usuario::class, 'eliminar/$1'], ['filter' => 'auth-admin']);
+$routes->post('/usuarios/contrasenia/resetear', [Usuario::class, 'cambiarContrasenia'], ['filter' => 'auth-admin']);
 
 /*
  * --------------------------------------------------------------------
