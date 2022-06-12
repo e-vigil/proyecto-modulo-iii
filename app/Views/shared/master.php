@@ -9,9 +9,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://unpkg.com/feather-icons"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
         .container {
             max-width: 1000px;
         }
+
     </style>
     <?= $this->renderSection('styles') ?>
 </head>
@@ -26,6 +33,12 @@
                         <a href="/dashboard" class="nav-link">Dashboard</a>
                     </li>
                     <?php if (session()->get('rol_id') == 1): ?>
+                        <li class="nav-item">
+                            <a href="/centros-tech" class="nav-link">Centros tech</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/dispositivos" class="nav-link">Dispositivos</a>
+                        </li>
                         <li class="nav-item">
                             <a href="/usuarios" class="nav-link">Accesos</a>
                         </li>

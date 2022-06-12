@@ -5,6 +5,8 @@ namespace Config;
 use App\Controllers\Auth;
 use App\Controllers\Home;
 use App\Controllers\Usuario;
+use App\Controllers\CentroTech;
+use App\Controllers\Dispositivo;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
@@ -55,6 +57,20 @@ $routes->match(['get', 'post'], '/usuarios/agregar', [Usuario::class, 'agregar']
 $routes->match(['get', 'post'], '/usuarios/editar/(:num)', [Usuario::class, 'editar/$1'], ['filter' => 'auth-admin']);
 $routes->get('/usuarios/eliminar/(:num)', [Usuario::class, 'eliminar/$1'], ['filter' => 'auth-admin']);
 $routes->post('/usuarios/contrasenia/resetear', [Usuario::class, 'cambiarContrasenia'], ['filter' => 'auth-admin']);
+
+// centros tech
+$routes->get('/centros-tech', [CentroTech::class, 'index'], ['filter' => 'auth-admin']);
+$routes->get('/centros-tech/detalles/(:num)', [CentroTech::class, 'detalles/$1'], ['filter' => 'auth-admin']);
+$routes->match(['get', 'post'], '/centros-tech/agregar', [CentroTech::class, 'agregar'], ['filter' => 'auth-admin']);
+$routes->match(['get', 'post'], '/centros-tech/editar/(:num)', [CentroTech::class, 'editar/$1'], ['filter' => 'auth-admin']);
+$routes->get('/centros-tech/eliminar/(:num)', [CentroTech::class, 'eliminar/$1'], ['filter' => 'auth-admin']);
+
+// dispositivos
+$routes->get('/dispositivos', [Dispositivo::class, 'index'], ['filter' => 'auth-admin']);
+$routes->get('/dispositivos/detalles/(:num)', [Dispositivo::class, 'detalles/$1'], ['filter' => 'auth-admin']);
+$routes->match(['get', 'post'], '/dispositivos/agregar', [Dispositivo::class, 'agregar'], ['filter' => 'auth-admin']);
+$routes->match(['get', 'post'], '/dispositivos/editar/(:num)', [Dispositivo::class, 'editar/$1'], ['filter' => 'auth-admin']);
+$routes->get('/dispositivos/eliminar/(:num)', [Dispositivo::class, 'eliminar/$1'], ['filter' => 'auth-admin']);
 
 /*
  * --------------------------------------------------------------------
