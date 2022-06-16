@@ -8,7 +8,7 @@
                 <i data-feather="chevron-left"></i>
                 <span class="ms-1">Lista de centros tech</span>
             </a>
-            <h3>Agregar centro tech</h3>
+            <h3>Editar centro tech</h3>
         </div>
     </div>
 
@@ -16,7 +16,7 @@
 
     <div class="card">
         <div class="card-header bg-white">
-            <h5 class="text-center">Agregar nuevo centro tech</h5>
+            <h5 class="text-center">Editar centro tech</h5>
         </div>
         <div class="card-body p-5">
 

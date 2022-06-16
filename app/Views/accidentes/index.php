@@ -12,10 +12,10 @@
                 <i data-feather="chevron-left"></i>
                 <span class="ms-1">Dashboard</span>
             </a>
-            <h3>Lista de dispositivos</h3>
+            <h3>Lista de accidentes</h3>
         </div>
         <div class="col-sm-12 col-md-6 text-end">
-            <a href="/dispositivos/agregar" class="btn btn-primary">Nuevo dispositivo</a>
+            <a href="/accidentes/agregar" class="btn btn-primary">Nuevo accidente</a>
         </div>
     </div>
 
@@ -28,39 +28,35 @@
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Nombre</th>
-                            <th>Marca</th>
-                            <th>Modelo</th>
-                            <th>Num. serie</th>
-                            <th>CT</th>
+                            <th>Titulo</th>
+                            <th>Fecha notificacion</th>
                             <th>Estado</th>
+                            <th>Notificador</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        <?php foreach ($dispositivos as $i): ?>
+                        <?php foreach ($accidentes as $i): ?>
                             <tr>
-                                <td>#<?= $i['id'] ?></td>
-                                <td><?= $i['nombre'] ?></td>
-                                <td><?= $i['marca'] ?></td>
-                                <td><?= $i['modelo'] ?></td>
-                                <td><?= $i['num_serie'] ?></td>
-                                <td><?= $i['centrotech'] ?></td>
+                                <td><?= $i['id'] ?></td>
+                                <td><?= $i['titulo'] ?></td>
+                                <td><?= $i['fecha_notificacion'] ?></td>
                                 <td>
                                     <span class="badge bg-light border text-dark"><?= $i['estado'] ?></span>
                                 </td>
+                                <td><?= $i['notificador'] ?></td>
                                 <td class="text-end">
                                     <div class="btn-group">
-                                        <a href="/dispositivos/detalles/<?= $i['id'] ?>" class="btn btn-link p-1">
+                                        <a href="/accidentes/detalles/<?= $i['id'] ?>" class="btn btn-link p-1">
                                             <i data-feather="info"></i>
                                         </a>
-                                        <a href="/dispositivos/editar/<?= $i['id'] ?>" class="btn btn-link p-1">
-                                            <i data-feather="edit-2"></i>
-                                        </a>
-                                        <a href="/dispositivos/eliminar/<?= $i['id'] ?>" class="btn btn-link p-1" onclick="return confirm('Estas seguro de querer elminar?')">
-                                            <i data-feather="trash"></i>
-                                        </a>
+                                        <?php if (session()->get('rol_id') == 1): ?>
+                                            <a href="/accidentes/editar/<?= $i['id'] ?>" class="btn btn-link p-1">
+                                                <i data-feather="edit-2"></i>
+                                            </a>
+                                            </a>
+                                        <?php endif ?>
                                     </div>
                                 </td>
                             </tr>
@@ -83,16 +79,6 @@
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json'
         }
-    })
-
-    $('.btn-editar-contrasenia').on('click', function () {
-
-        let id = $(this).attr('data-id')
-        let usuario = $(this).attr('data-usuario')
-
-        $('#id').val(id)
-        $('#usuario').val(usuario)
-
     })
 </script>
 <?= $this->endSection() ?>

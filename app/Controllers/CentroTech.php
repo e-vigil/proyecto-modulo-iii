@@ -15,6 +15,7 @@ class CentroTech extends BaseController
     
             return view('centrostech/index', [
                 'centrosTech' => $centrosTech,
+                'modulo' => 'centrostech',
             ]);
         } catch (Exception $ex) {
             throw $ex;
@@ -36,6 +37,7 @@ class CentroTech extends BaseController
             return view('centrostech/detalles', [
                 'centroTech' => $centroTech,
                 'dispositivos' => $dispositivos,
+                'modulo' => 'centrostech',
             ]);
 
         } catch (Exception $ex) {
@@ -72,7 +74,9 @@ class CentroTech extends BaseController
                 ]);
         }
 
-        return view('centrostech/agregar');
+        return view('centrostech/agregar', [
+            'modulo' => 'centrostech',
+        ]);
     }
 
     public function editar($id) {
@@ -109,6 +113,7 @@ class CentroTech extends BaseController
 
         return view('centrostech/editar', [
             'centroTech' => $centroTech,
+            'modulo' => 'centrostech',
         ]);
     }
 

@@ -7,6 +7,7 @@ use App\Controllers\Home;
 use App\Controllers\Usuario;
 use App\Controllers\CentroTech;
 use App\Controllers\Dispositivo;
+use App\Controllers\Accidente;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
@@ -71,6 +72,14 @@ $routes->get('/dispositivos/detalles/(:num)', [Dispositivo::class, 'detalles/$1'
 $routes->match(['get', 'post'], '/dispositivos/agregar', [Dispositivo::class, 'agregar'], ['filter' => 'auth-admin']);
 $routes->match(['get', 'post'], '/dispositivos/editar/(:num)', [Dispositivo::class, 'editar/$1'], ['filter' => 'auth-admin']);
 $routes->get('/dispositivos/eliminar/(:num)', [Dispositivo::class, 'eliminar/$1'], ['filter' => 'auth-admin']);
+
+// accidentes
+$routes->get('/accidentes', [Accidente::class, 'index'], ['filter' => 'auth']);
+$routes->get('/accidentes/detalles/(:num)', [Accidente::class, 'detalles'], ['filter' => 'auth']);
+$routes->match(['get', 'post'], '/accidentes/agregar', [Accidente::class, 'agregar'], ['filter' => 'auth']);
+$routes->match(['get', 'post'], '/accidentes/editar/(:num)', [Accidente::class, 'editar/$1'], ['filter' => 'auth']);
+$routes->get('/accidentes/eliminar/(:num)', [Accidente::class, 'eliminar/$1'], ['filter' => 'auth']);
+$routes->get('/accidentes/ct/(:num)/dispositivos', [Accidente::class, 'obtenerDispositivosPorCentroTech/$1'], ['filter' => 'auth']);
 
 /*
  * --------------------------------------------------------------------

@@ -20,7 +20,8 @@ class Dispositivo extends BaseController
             $dispositivos = json_decode(json_encode($data), true);
     
             return view('dispositivos/index', [
-                'dispositivos' => $dispositivos
+                'dispositivos' => $dispositivos,
+                'modulo' => 'dispositivos',
             ]);
 
         } catch (Exception $ex) {
@@ -42,6 +43,7 @@ class Dispositivo extends BaseController
 
             return view('dispositivos/detalles', [
                 'dispositivo' => $dispositivo[0],
+                'modulo' => 'dispositivos',
             ]);
 
         } catch (Exception $ex) {
@@ -90,6 +92,7 @@ class Dispositivo extends BaseController
 
         return view('dispositivos/agregar', [
             'centrosTech' => $centrosTech,
+            'modulo' => 'dispositivos',
         ]);
 
     }
@@ -145,6 +148,7 @@ class Dispositivo extends BaseController
             'dispositivo' => $dispositivo,
             'centrosTech' => $centrosTech,
             'estadosDispositivo' => $estadosDispositivo,
+            'modulo' => 'dispositivos',
         ]);
 
     }
