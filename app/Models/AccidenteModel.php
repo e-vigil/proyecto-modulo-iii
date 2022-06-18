@@ -19,6 +19,7 @@ class AccidenteModel extends Model
         'descripcion',
         'fecha_notificacion',
         'resolucion',
+        'foto_res',
         'fecha_resolucion',
         'foto',
         'dispositivo_id',

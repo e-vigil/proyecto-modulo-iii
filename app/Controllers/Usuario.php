@@ -16,7 +16,7 @@ class Usuario extends BaseController
 
             return view('usuarios/index', [
                 'usuarios' => $usuarios,
-                'modulo' => 'accesos',
+                'modulo' => 'administracion',
             ]);
 
         } catch (Exception $ex) {
@@ -33,7 +33,7 @@ class Usuario extends BaseController
 
             return view('usuarios/detalles', [
                 'usuario' => $usuario,
-                'modulo' => 'accesos',
+                'modulo' => 'administracion',
             ]);
 
         } catch (Exception $ex) {
@@ -91,7 +91,7 @@ class Usuario extends BaseController
 
         return view('usuarios/agregar', [
             'roles' => $roles,
-            'modulo' => 'accesos',
+            'modulo' => 'administracion',
         ]);
     }
 
@@ -131,7 +131,7 @@ class Usuario extends BaseController
                     'errors' => $model->errors(),
                     'roles' => $roles,
                     'usuario' => $usuario,
-                    'modulo' => 'accesos',
+                    'modulo' => 'administracion',
                 ]);
         }
 
@@ -143,7 +143,7 @@ class Usuario extends BaseController
         return view('usuarios/editar', [
             'usuario' => $usuario,
             'roles' => $roles,
-            'modulo' => 'accesos',
+            'modulo' => 'administracion',
         ]);
     }
 

@@ -77,9 +77,10 @@ $routes->get('/dispositivos/eliminar/(:num)', [Dispositivo::class, 'eliminar/$1'
 $routes->get('/accidentes', [Accidente::class, 'index'], ['filter' => 'auth']);
 $routes->get('/accidentes/detalles/(:num)', [Accidente::class, 'detalles'], ['filter' => 'auth']);
 $routes->match(['get', 'post'], '/accidentes/agregar', [Accidente::class, 'agregar'], ['filter' => 'auth']);
-$routes->match(['get', 'post'], '/accidentes/editar/(:num)', [Accidente::class, 'editar/$1'], ['filter' => 'auth']);
-$routes->get('/accidentes/eliminar/(:num)', [Accidente::class, 'eliminar/$1'], ['filter' => 'auth']);
+$routes->match(['get', 'post'], '/accidentes/resolucion/(:num)', [Accidente::class, 'resolucion/$1'], ['filter' => 'auth-admin']);
+$routes->get('/accidentes/eliminar/(:num)', [Accidente::class, 'eliminar/$1'], ['filter' => 'auth-admin']);
 $routes->get('/accidentes/ct/(:num)/dispositivos', [Accidente::class, 'obtenerDispositivosPorCentroTech/$1'], ['filter' => 'auth']);
+$routes->post('/accidentes/cambiar-estado', [Accidente::class, 'cambiarEstado'], ['filter' => 'auth-admin']);
 
 /*
  * --------------------------------------------------------------------

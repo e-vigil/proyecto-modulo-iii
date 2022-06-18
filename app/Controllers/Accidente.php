@@ -23,12 +23,17 @@ class Accidente extends BaseController
             $query = $db->query("call spListarMisAccidenteNotificados($id)");
             $data = $query->getResult();
         }
-
         $accidentes = json_decode(json_encode($data), true);
+
+        $query = $db->query("call spListarEstadosAccidente()");
+        $data = $query->getResult();
+        
+        $estados = json_decode(json_encode($data), true);
 
         return view('accidentes/index', [
             'modulo' => 'accidentes',
             'accidentes' => $accidentes,
+            'estados' => $estados,
         ]);
     }
 
@@ -54,9 +59,51 @@ class Accidente extends BaseController
 
     public function agregar() {
 
+        $centrosTechModel = model(CentroTechModel::class);
+        $db = db_connect();
+        $query = $db->query("call spListarTiposAccidentes()");
+        $data = $query->getResult();
+
         if ($this->request->getMethod() == 'post') {
 
             $model = model(AccidenteModel::class);
+
+            $validacion = [
+                'titulo' => 'required',
+                'descripcion' => 'required',
+                'dispositivo_id' => 'required',
+                'foto' => 'uploaded[foto]'
+                    . '|is_image[foto]'
+                    . '|mime_in[foto,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
+                    . '|max_size[foto,1000]'
+                    . '|max_dims[foto,1024,768]',
+            ];
+
+            $mensajesValidacion = [
+                'titulo' => ['required' => 'Titulo es requerido',],
+                'descripcion' => ['required' => 'Descripcion es requerido',],
+                'dispositivo_id' => ['required' => 'Dispositivo es requerido',],
+                'foto' => [
+                    'uploaded' => 'Foto de evidencia es requerido',
+                    'is_image' => 'Foto de evidencia es tiene que ser una imagen',
+                    'mime_in' => 'Foto de evidencia debe tener los siguientes formatos: image/jpg,image/jpeg,image/gif,image/png,image/webp',
+                    'max_size' => 'Foto de evidencia debe pesar maximo de 1mb',
+                    'max_dims' => 'Foto de evidencia debe tener meno de 1024,768 de dimension',
+                ],
+            ];
+
+            if (!$this->validate($validacion, $mensajesValidacion)) {
+
+                $centrosTech = $centrosTechModel->findAll();
+                $tiposAccidentes = json_decode(json_encode($data), true);
+
+                return view('accidentes/agregar', [
+                    'modulo' => 'accidentes',
+                    'tiposAccidentes' => $tiposAccidentes,
+                    'centrosTech' => $centrosTech,
+                    'errors' => $this->validator->getErrors(),
+                ]);
+            }
 
             $titulo = $this->request->getPost('titulo');
             $descripcion = $this->request->getPost('descripcion');
@@ -67,22 +114,6 @@ class Accidente extends BaseController
             $fecha_notificacion = date('Y-m-d H:i:s');
             $estado_notificacion_id = 1;
             $usuario_id = session()->get('usuario_id');
-
-            $validationRule = [
-                'foto' => [
-                    'label' => 'Image File',
-                    'rules' => 'uploaded[foto]'
-                        . '|is_image[foto]'
-                        . '|mime_in[foto,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
-                        . '|max_size[foto,1000]'
-                        . '|max_dims[foto,1024,768]',
-                ],
-            ];
-
-            if (!$this->validate($validationRule)) {
-                $data = ['errors' => $this->validator->getErrors()];
-                return view('accidentes/agregar', $data);
-            }
 
             $file = $this->request->getFile('foto');
             $fileName = $file->getRandomName();
@@ -114,16 +145,15 @@ class Accidente extends BaseController
                     ]);
             }
 
+            return redirect()->to('/accidentes/agregar')
+                ->with('msg', [
+                    'type' => 'danger',
+                    'content' => 'No se puedo guardar los datos',
+                ]);
+
         }
 
-        $centrosTechModel = model(CentroTechModel::class);
         $centrosTech = $centrosTechModel->findAll();
-
-        $db = db_connect();
-
-        $query = $db->query("call spListarTiposAccidentes()");
-        $data = $query->getResult();
-
         $tiposAccidentes = json_decode(json_encode($data), true);
 
         return view('accidentes/agregar', [
@@ -131,6 +161,126 @@ class Accidente extends BaseController
             'tiposAccidentes' => $tiposAccidentes,
             'centrosTech' => $centrosTech,
         ]);
+
+    }
+
+    public function resolucion($id) {
+
+        $model = model(AccidenteModel::class);
+
+        if ($this->request->getMethod() == 'post') {
+
+            $validacion = [
+                'resolucion' => 'required',
+                'foto_res' => 'uploaded[foto_res]'
+                    . '|is_image[foto_res]'
+                    . '|mime_in[foto_res,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
+                    . '|max_size[foto_res,1000]'
+                    . '|max_dims[foto_res,1024,768]',
+            ];
+
+            $mensajesValidacion = [
+                'resolucion' => ['required' => 'Resolucion es requerido',],
+                'foto_res' => [
+                    'uploaded' => 'Foto de evidencia es requerido',
+                    'is_image' => 'Foto de evidencia es tiene que ser una imagen',
+                    'mime_in' => 'Foto de evidencia debe tener los siguientes formatos: image/jpg,image/jpeg,image/gif,image/png,image/webp',
+                    'max_size' => 'Foto de evidencia debe pesar maximo de 1mb',
+                    'max_dims' => 'Foto de evidencia debe tener meno de 1024,768 de dimension',
+                ],
+            ];
+
+            if (!$this->validate($validacion, $mensajesValidacion)) {
+
+                $accidente = $model->find($id);
+
+                return view('accidentes/resolucion', [
+                    'modulo' => 'accidentes',
+                    'accidente' => $accidente,
+                    'errors' => $this->validator->getErrors(),
+                ]);
+            }
+
+            $id = $this->request->getPost('id');
+            $resolucion = $this->request->getPost('resolucion');
+            $estado_notificacion_id = 4;
+
+            date_default_timezone_set('America/El_Salvador');
+            $fecha_resolucion = date('Y-m-d H:i:s');
+
+            $file = $this->request->getFile('foto_res');
+            $fileName = $file->getRandomName();
+
+            $absolutePath = ROOTPATH . 'public/uploads';
+            $ruta = '';
+
+            if ($file->move($absolutePath, $fileName)) {
+                $ruta = 'uploads/' . $fileName;
+            }
+
+            $data = [
+                'resolucion' => $resolucion,
+                'foto_res' => $ruta,
+                'fecha_resolucion' => $fecha_resolucion,
+                'estado_notificacion_id' => $estado_notificacion_id,
+            ];
+
+            if ($model->update($id, $data)) {
+
+                return redirect()->to('/accidentes')
+                    ->with('msg', [
+                        'type' => 'success',
+                        'content' => 'Accidente editado satisfactoriamente',
+                    ]);
+
+            }
+
+            return redirect()->to('/accidentes')
+                ->with('msg', [
+                    'type' => 'danger',
+                    'content' => 'No se puedo editar el accidente',
+                ]);
+
+        }
+
+        $accidente = $model->find($id);
+
+        return view('accidentes/resolucion', [
+            'modulo' => 'accidentes',
+            'accidente' => $accidente,
+        ]);
+    }
+
+    public function cambiarEstado() {
+
+        if ($this->request->getMethod() == 'post') {
+
+            $model = model(AccidenteModel::class);
+
+            $id = $this->request->getPost('id');
+            $estado_id = $this->request->getPost('estado_id');
+
+            $data = [
+                'estado_notificacion_id' => $estado_id
+            ];
+
+            if ($model->update($id, $data)) {
+
+                return redirect()->to('/accidentes')
+                    ->with('msg', [
+                        'type' => 'success',
+                        'content' => 'Estado de accidente cambiado satisfactoriamente',
+                    ]);
+
+            }
+
+            return redirect()->to('/accidentes')
+                ->with('msg', [
+                    'type' => 'danger',
+                    'content' => 'No se puedo editar el estado de la notificacion',
+                ]);
+
+        }
 
     }
 }

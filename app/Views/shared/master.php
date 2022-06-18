@@ -11,10 +11,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-        * {
-            font-weight: 500 !important;
-        }
-
         html {
             font-size: 14px;
         }
@@ -41,10 +37,88 @@
             color: #0d6efd !important;
         }
 
+        .badge {
+            font-size: 13px !important;
+            font-weight: normal;
+        }
+
+        .badge.bg-success {
+            background-color: #E3FCEF !important;
+            color: #00875A !important;
+        }
+
+        .badge.bg-danger {
+            background-color: #FFEBE6 !important;
+            color: #DE350B !important;
+        }
+
+        .badge.bg-warning {
+            background-color: #FFFAE6 !important;
+            color: #FFC400 !important;
+        }
+
+        .badge.bg-info {
+            background-color: #DEEBFF !important;
+            color: #0d6efd !important;
+        }
+
+        .alert-success {
+            background-color: #E3FCEF !important;
+            border-color: #E3FCEF !important;
+            color: #00875A !important;
+        }
+
+        .alert-danger {
+            background-color: #FFEBE6 !important;
+            border-color: #FFEBE6 !important;
+            color: #DE350B !important;
+        }
+
+        .alert-warning {
+            background-color: #FFFAE6 !important;
+            border-color: #FFFAE6 !important;
+            color: #FFC400 !important;
+        }
+
+        .alert-info {
+            background-color: #DEEBFF !important;
+            border-color: #DEEBFF !important;
+            color: #0d6efd !important;
+        }
+
+        .text-muted {
+            color: #A5ADBA !important;
+        }
+
+        .dropdown-menu {
+            min-width: 14rem;
+        }
+
+        .dropdown-item {
+            padding: 8px 20px !important;
+        }
+
+        #preloader {
+            background-color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000001;
+        }
+
     </style>
     <?= $this->renderSection('styles') ?>
 </head>
 <body>
+
+    <div id="preloader">
+        <img src="<?= base_url() ?>/1488.gif" alt="" width="64">
+    </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
         <div class="container-fluid">
@@ -67,23 +141,31 @@
                         </a>
                     </li>
                     <?php if (session()->get('rol_id') == 1): ?>
-                        <li class="nav-item">
-                            <a href="/centros-tech" class="nav-link d-flex align-items-center" id="centrostech">
-                                <i data-feather="cloud"></i>
-                                <span class="ms-1">Centros tech</span>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="administracion" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i data-feather="user"></i>
+                                Administracion
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/dispositivos" class="nav-link d-flex align-items-center" id="dispositivos">
-                                <i data-feather="smartphone"></i>
-                                <span class="ms-1">Dispositivos</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/usuarios" class="nav-link d-flex align-items-center" id="accesos">
-                                <i data-feather="users"></i>
-                                <span class="ms-1">Accesos</span>
-                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="administracion">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="/centros-tech">
+                                        <i data-feather="cloud"></i>
+                                        <span class="ms-1">Centros tech</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="/dispositivos">
+                                        <i data-feather="smartphone"></i>
+                                        <span class="ms-1">Dispositivos</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="/usuarios">
+                                        <i data-feather="users"></i>
+                                        <span class="ms-1">Accesos</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     <?php endif ?>
                 </ul>
@@ -97,7 +179,12 @@
                             <li><a class="dropdown-item" href="#">Action</a></li>
                             <li><a class="dropdown-item" href="#">Another action</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/logout">Cerrar sesión</a></li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="/logout">
+                                    <i data-feather="log-out"></i>
+                                    <span class="ms-1">Logout</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -106,7 +193,6 @@
     </nav>
 
     <main>
-            
         <div class="container py-5">
             <?= $this->include('shared/messages') ?>
             <?= $this->renderSection('main-content') ?>
@@ -122,6 +208,12 @@
 
         const element = document.querySelector('#<?= $modulo ?>')
         element.classList.add('active');
+
+        window.addEventListener('DOMContentLoaded', (e) => {
+            setTimeout(() => {
+                document.querySelector('#preloader').style.display = 'none';
+            }, 500);
+        });
 
     </script>
     <?= $this->renderSection('scripts') ?>

@@ -21,7 +21,7 @@ class Dispositivo extends BaseController
     
             return view('dispositivos/index', [
                 'dispositivos' => $dispositivos,
-                'modulo' => 'dispositivos',
+                'modulo' => 'administracion',
             ]);
 
         } catch (Exception $ex) {
@@ -43,7 +43,7 @@ class Dispositivo extends BaseController
 
             return view('dispositivos/detalles', [
                 'dispositivo' => $dispositivo[0],
-                'modulo' => 'dispositivos',
+                'modulo' => 'administracion',
             ]);
 
         } catch (Exception $ex) {
@@ -53,9 +53,34 @@ class Dispositivo extends BaseController
 
     public function agregar() {
 
+        $centrosTechModel = model(CentroTechModel::class);
+
         if ($this->request->getMethod() == 'post') {
 
             $model = model(DispositivoModel::class);
+
+            $validacion = [
+                'nombre' => 'required',
+                'marca' => 'required',
+                'modelo' => 'required',
+                'num_serie' => 'required',
+            ];
+
+            $mensajesValidacion = [
+                'nombre' => ['required' => 'Nombre es requerido',],
+                'marca' => ['required' => 'Marca es requerido',],
+                'modelo' => ['required' => 'Modelo es requerido',],
+                'num_serie' => ['required' => 'Num. serie es requerido',],
+            ];
+
+            if (!$this->validate($validacion, $mensajesValidacion)) {
+                $centrosTech = $centrosTechModel->findAll();
+                return view('dispositivos/agregar', [
+                    'modulo' => 'administracion',
+                    'centrosTech' => $centrosTech,
+                    'errors' => $this->validator->getErrors(),
+                ]);
+            }
 
             $nombre = $this->request->getPost('nombre');
             $descripcion = $this->request->getPost('descripcion');
@@ -86,22 +111,55 @@ class Dispositivo extends BaseController
 
         }
 
-        $centrosTechModel = model(CentroTechModel::class);
-
         $centrosTech = $centrosTechModel->findAll();
 
         return view('dispositivos/agregar', [
             'centrosTech' => $centrosTech,
-            'modulo' => 'dispositivos',
+            'modulo' => 'administracion',
         ]);
 
     }
 
     public function editar($id) {
 
+        $dispositivoModel = model(DispositivoModel::class);
+        $centrosTechModel = model(CentroTechModel::class);
+        $db = db_connect();
+        $query = $db->query("call spListarEstadosDispositivo()");
+        $data = $query->getResult();
+
         if ($this->request->getMethod() == 'post') {
 
             $model = model(DispositivoModel::class);
+
+            $validacion = [
+                'nombre' => 'required',
+                'marca' => 'required',
+                'modelo' => 'required',
+                'num_serie' => 'required',
+            ];
+
+            $mensajesValidacion = [
+                'nombre' => ['required' => 'Nombre es requerido',],
+                'marca' => ['required' => 'Marca es requerido',],
+                'modelo' => ['required' => 'Modelo es requerido',],
+                'num_serie' => ['required' => 'Num. serie es requerido',],
+            ];
+
+            if (!$this->validate($validacion, $mensajesValidacion)) {
+
+                $dispositivo = $dispositivoModel->find($id);
+                $centrosTech = $centrosTechModel->findAll();
+                $estadosDispositivo = json_decode(json_encode($data), true);
+
+                return view('dispositivos/editar', [
+                    'dispositivo' => $dispositivo,
+                    'centrosTech' => $centrosTech,
+                    'estadosDispositivo' => $estadosDispositivo,
+                    'modulo' => 'administracion',
+                    'errors' => $this->validator->getErrors(),
+                ]);
+            }
 
             $id = $this->request->getPost('id');
             $nombre = $this->request->getPost('nombre');
@@ -133,22 +191,15 @@ class Dispositivo extends BaseController
 
         }
 
-        $dispositivoModel = model(DispositivoModel::class);
         $dispositivo = $dispositivoModel->find($id);
-
-        $centrosTechModel = model(CentroTechModel::class);
         $centrosTech = $centrosTechModel->findAll();
-
-        $db = db_connect();
-        $query = $db->query("call spListarEstadosDispositivo()");
-        $data = $query->getResult();
         $estadosDispositivo = json_decode(json_encode($data), true);
 
         return view('dispositivos/editar', [
             'dispositivo' => $dispositivo,
             'centrosTech' => $centrosTech,
             'estadosDispositivo' => $estadosDispositivo,
-            'modulo' => 'dispositivos',
+            'modulo' => 'administracion',
         ]);
 
     }

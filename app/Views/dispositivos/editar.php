@@ -30,23 +30,35 @@
 
                         <div class="mb-3">
                             <label for="" class="form-label">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" value="<?= $dispositivo['nombre'] ?>">
+                            <input type="text" id="nombre" name="nombre" class="form-control
+                                <?php if (isset($errors) && isset($errors['nombre'])): ?>
+                                    border-danger
+                                <?php endif ?>" placeholder="Nombre" value="<?= $dispositivo['nombre'] ?>">
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Descripcion</label>
-                            <textarea name="descripcion" id="descripcion" rows="3" class="form-control"><?= $dispositivo['descripcion'] ?></textarea>
+                            <textarea name="descripcion" id="descripcion" rows="3" class="form-control" placeholder="Descripcion"><?= $dispositivo['descripcion'] ?></textarea>
                         </div>   
                         <div class="mb-3">
                             <label for="" class="form-label">Marca</label>
-                            <input type="text" id="marca" name="marca" class="form-control" placeholder="Marca" value="<?= $dispositivo['marca'] ?>">
+                            <input type="text" id="marca" name="marca" class="form-control
+                                <?php if (isset($errors) && isset($errors['marca'])): ?>
+                                    border-danger
+                                <?php endif ?>" placeholder="Marca" value="<?= $dispositivo['marca'] ?>">
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Modelo</label>
-                            <input type="text" id="modelo" name="modelo" class="form-control" placeholder="Modelo" value="<?= $dispositivo['modelo'] ?>">
+                            <input type="text" id="modelo" name="modelo" class="form-control 
+                                <?php if (isset($errors) && isset($errors['modelo'])): ?>
+                                    border-danger
+                                <?php endif ?>" placeholder="Modelo" value="<?= $dispositivo['modelo'] ?>">
                         </div>                   
                         <div class="mb-3">
                             <label for="" class="form-label">Num. serie</label>
-                            <input type="text" id="num_serie" name="num_serie" class="form-control" placeholder="Num. serie" value="<?= $dispositivo['num_serie'] ?>">
+                            <input type="text" id="num_serie" name="num_serie" class="form-control 
+                                <?php if (isset($errors) && isset($errors['num_serie'])): ?>
+                                    border-danger
+                                <?php endif ?>" placeholder="Num. serie" value="<?= $dispositivo['num_serie'] ?>">
                         </div>    
                         <div class="mb-3">
                             <label for="" class="form-label">Centro tech</label>
@@ -80,7 +92,7 @@
                         </div>    
 
                         <div class="mb-3 text-end">
-                            <button type="button" class="btn btn-link text-muted" data-bs-dismiss="modal">Cancelar</button>
+                            <a href="/dispositivos" class="btn btn-link text-muted">Cancelar</a>
                             <button type="submit" class="btn btn-primary">Editar</button>
                         </div>
 

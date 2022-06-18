@@ -23,8 +23,8 @@
     <div class="row">
         <div class="col-sm-12 col-md-3">
             <div class="card">
-                <div class="card-header">
-                    <h5>Centro tech</h5>
+                <div class="card-header bg-white">
+                    <h5 class="card-title">Centro tech</h5>
                 </div>
                 <div class="card-body">
 
@@ -58,8 +58,8 @@
         </div>
         <div class="col-sm-12 col-md-9">
             <div class="card">
-                <div class="card-header">
-                    <h5>Lista de dispositivos</h5>
+                <div class="card-header bg-white">
+                    <h5 class="card-title">Lista de dispositivos</h5>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

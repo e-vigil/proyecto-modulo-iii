@@ -29,11 +29,15 @@
 
                         <div class="mb-3">
                             <label for="" class="form-label">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
+                            <input type="text" id="nombre" name="nombre" class="form-control 
+                                <?php if (isset($errors) && isset($errors['nombre'])): ?>
+                                    border-danger
+                                <?php endif ?>"
+                                placeholder="Nombre">
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Descripcion</label>
-                            <textarea name="descripcion" id="descripcion" rows="5" class="form-control"></textarea>
+                            <textarea name="descripcion" id="descripcion" rows="5" class="form-control" placeholder="Descripcion"></textarea>
                         </div>
 
                         <div class="mb-3 text-end">

@@ -29,23 +29,39 @@
 
                         <div class="mb-3">
                             <label for="" class="form-label">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
+                            <input type="text" id="nombre" name="nombre" class="form-control
+                                <?php if (isset($errors) && isset($errors['nombre'])): ?>
+                                    border-danger
+                                <?php endif ?>"
+                                placeholder="Nombre">
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Descripcion</label>
-                            <textarea name="descripcion" id="descripcion" rows="3" class="form-control"></textarea>
+                            <textarea name="descripcion" id="descripcion" rows="3" class="form-control" placeholder="Descripcion"></textarea>
                         </div>   
                         <div class="mb-3">
                             <label for="" class="form-label">Marca</label>
-                            <input type="text" id="marca" name="marca" class="form-control" placeholder="Marca">
+                            <input type="text" id="marca" name="marca" class="form-control
+                                <?php if (isset($errors) && isset($errors['marca'])): ?>
+                                    border-danger
+                                <?php endif ?>"
+                            placeholder="Marca">
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Modelo</label>
-                            <input type="text" id="modelo" name="modelo" class="form-control" placeholder="Modelo">
+                            <input type="text" id="modelo" name="modelo" class="form-control
+                                <?php if (isset($errors) && isset($errors['modelo'])): ?>
+                                    border-danger
+                                <?php endif ?>"
+                                placeholder="Modelo">
                         </div>                   
                         <div class="mb-3">
                             <label for="" class="form-label">Num. serie</label>
-                            <input type="text" id="num_serie" name="num_serie" class="form-control" placeholder="Num. serie">
+                            <input type="text" id="num_serie" name="num_serie" class="form-control
+                                <?php if (isset($errors) && isset($errors['num_serie'])): ?>
+                                    border-danger
+                                <?php endif ?>"
+                                placeholder="Num. serie">
                         </div>    
                         <div class="mb-3">
                             <label for="" class="form-label">Centro tech</label>
@@ -57,7 +73,7 @@
                         </div>    
 
                         <div class="mb-3 text-end">
-                            <button type="button" class="btn btn-link text-muted" data-bs-dismiss="modal">Cancelar</button>
+                            <a href="/dispositivos" class="btn btn-link text-muted">Cancelar</a>
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
 

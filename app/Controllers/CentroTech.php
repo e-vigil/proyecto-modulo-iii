@@ -15,7 +15,7 @@ class CentroTech extends BaseController
     
             return view('centrostech/index', [
                 'centrosTech' => $centrosTech,
-                'modulo' => 'centrostech',
+                'modulo' => 'administracion',
             ]);
         } catch (Exception $ex) {
             throw $ex;
@@ -37,7 +37,7 @@ class CentroTech extends BaseController
             return view('centrostech/detalles', [
                 'centroTech' => $centroTech,
                 'dispositivos' => $dispositivos,
-                'modulo' => 'centrostech',
+                'modulo' => 'administracion',
             ]);
 
         } catch (Exception $ex) {
@@ -50,6 +50,21 @@ class CentroTech extends BaseController
         if ($this->request->getMethod() == 'post') {
 
             $model = model(CentroTechModel::class);
+
+            $validacion = [
+                'nombre' => 'required',
+            ];
+
+            $mensajesValidacion = [
+                'nombre' => ['required' => 'Nombre es requerido',],
+            ];
+
+            if (!$this->validate($validacion, $mensajesValidacion)) {
+                return view('centrostech/agregar', [
+                    'modulo' => 'administracion',
+                    'errors' => $this->validator->getErrors(),
+                ]);
+            }
 
             $nombre = $this->request->getPost('nombre');
             $descripcion = $this->request->getPost('descripcion');
@@ -75,7 +90,7 @@ class CentroTech extends BaseController
         }
 
         return view('centrostech/agregar', [
-            'modulo' => 'centrostech',
+            'modulo' => 'administracion',
         ]);
     }
 
@@ -84,6 +99,23 @@ class CentroTech extends BaseController
         $model = model(CentroTechModel::class);
 
         if ($this->request->getMethod() == 'post') {
+
+            $validacion = [
+                'nombre' => 'required',
+            ];
+
+            $mensajesValidacion = [
+                'nombre' => ['required' => 'Nombre es requerido',],
+            ];
+
+            if (!$this->validate($validacion, $mensajesValidacion)) {
+                $centroTech = $model->find($id);
+                return view('centrostech/editar', [
+                    'modulo' => 'administracion',
+                    'centroTech' => $centroTech,
+                    'errors' => $this->validator->getErrors(),
+                ]);
+            }
 
             $id = $this->request->getPost('id');
             $nombre = $this->request->getPost('nombre');
@@ -113,7 +145,7 @@ class CentroTech extends BaseController
 
         return view('centrostech/editar', [
             'centroTech' => $centroTech,
-            'modulo' => 'centrostech',
+            'modulo' => 'administracion',
         ]);
     }
 

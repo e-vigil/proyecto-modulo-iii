@@ -29,11 +29,17 @@
 
                         <div class="mb-3">
                             <label for="" class="form-label">Titulo</label>
-                            <input type="text" id="titulo" name="titulo" class="form-control" placeholder="Titulo">
+                            <input type="text" id="titulo" name="titulo" class="form-control 
+                                <?php if (isset($errors) && isset($errors['titulo'])): ?>
+                                    border-danger
+                                <?php endif ?>" placeholder="Titulo">
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Descripcion</label>
-                            <textarea name="descripcion" id="descripcion" rows="5" class="form-control" placeholder="Descripcion"></textarea>
+                            <textarea name="descripcion" id="descripcion" rows="3" class="form-control
+                                <?php if (isset($errors) && isset($errors['descripcion'])): ?>
+                                    border-danger
+                                <?php endif ?>" placeholder="Descripcion"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Tipo de accidente</label>
@@ -54,13 +60,23 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Dispositivo</label>
-                            <select name="dispositivo_id" id="dispositivo_id" class="form-select">
+                            <select name="dispositivo_id" id="dispositivo_id" class="form-select 
+                                <?php if (isset($errors) && isset($errors['dispositivo_id'])): ?>
+                                    border-danger
+                                <?php endif ?>">
                                 <option value="">Seleccione un dispositivo</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="foto" class="form-label">Seleciona una foto como evidencia</label>
-                            <input class="form-control" type="file" id="foto" name="foto">
+                            <input
+                                type="file"
+                                id="foto"
+                                name="foto"
+                                class="form-control
+                                <?php if (isset($errors) && isset($errors['foto'])): ?>
+                                    border-danger
+                                <?php endif ?>">
                         </div>
 
                         <div class="mb-3 text-end">
