@@ -98,7 +98,7 @@
                                 <td><?= $i['notificador'] ?></td>
                                 <td class="text-end">
                                     <div class="btn-group">
-                                        <?php if (session()->get('rol_id') == 1): ?>
+                                        <?php if (session()->get('rol_id') == 1 && $i['estado'] != 'Resuelto'): ?>
                                             <button type="button" class="btn btn-link p-1 btn-editar-estado" data-bs-toggle="modal" data-bs-target="#modalCambiarEstadoAccidente" title="Cambiar estado" data-id="<?= $i['id'] ?>" data-accidente="<?= $i['titulo'] ?>" data-estado-id="<?= $i['idestado'] ?>">
                                                 <i data-feather="edit"></i>
                                             </button>
@@ -106,7 +106,7 @@
                                         <a href="/accidentes/detalles/<?= $i['id'] ?>" class="btn btn-link p-1" title="Info">
                                             <i data-feather="info"></i>
                                         </a>
-                                        <?php if (session()->get('rol_id') == 1): ?>
+                                        <?php if (session()->get('rol_id') == 1 && $i['estado'] != 'Resuelto'): ?>
                                             <a href="/accidentes/resolucion/<?= $i['id'] ?>" class="btn btn-link p-1" title="Hacer resolucion">
                                                 <i data-feather="check-circle"></i>
                                             </a>

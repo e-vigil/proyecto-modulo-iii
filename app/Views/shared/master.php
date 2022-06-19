@@ -29,11 +29,11 @@
             width: 20px;
         }
 
-        .nav-link {
+        .navbar .nav-link {
             color: inherit !important;
         }
         
-        .nav-link.active {
+        .navbar .nav-link.active {
             color: #0d6efd !important;
         }
 
@@ -138,6 +138,12 @@
                         <a href="/accidentes" class="nav-link d-flex align-items-center" id="accidentes">
                             <i data-feather="clipboard"></i>
                             <span class="ms-1">Accidentes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/reportes" class="nav-link d-flex align-items-center" id="reporte">
+                            <i data-feather="folder"></i>
+                            <span class="ms-1">Reportes</span>
                         </a>
                     </li>
                     <?php if (session()->get('rol_id') == 1): ?>

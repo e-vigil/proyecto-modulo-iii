@@ -8,6 +8,7 @@ use App\Controllers\Usuario;
 use App\Controllers\CentroTech;
 use App\Controllers\Dispositivo;
 use App\Controllers\Accidente;
+use App\Controllers\Reporte;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
@@ -81,6 +82,9 @@ $routes->match(['get', 'post'], '/accidentes/resolucion/(:num)', [Accidente::cla
 $routes->get('/accidentes/eliminar/(:num)', [Accidente::class, 'eliminar/$1'], ['filter' => 'auth-admin']);
 $routes->get('/accidentes/ct/(:num)/dispositivos', [Accidente::class, 'obtenerDispositivosPorCentroTech/$1'], ['filter' => 'auth']);
 $routes->post('/accidentes/cambiar-estado', [Accidente::class, 'cambiarEstado'], ['filter' => 'auth-admin']);
+
+// reportes
+$routes->get('/reportes', [Reporte::class, 'index'], ['filter' => 'auth-admin']); 
 
 /*
  * --------------------------------------------------------------------
