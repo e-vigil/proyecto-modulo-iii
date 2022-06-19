@@ -41,7 +41,7 @@
             <button class="nav-link" id="pill-accidente" data-bs-toggle="pill" data-bs-target="#accidente" type="button" role="tab" aria-controls="accidente" aria-selected="true">Reporte de accidentes</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pill-dispositivo" data-bs-toggle="pill" data-bs-target="#dispositivo" type="button" role="tab" aria-controls="dispositivo" aria-selected="true">Reporte de accidentes</button>
+            <button class="nav-link" id="pill-dispositivo" data-bs-toggle="pill" data-bs-target="#dispositivo" type="button" role="tab" aria-controls="dispositivo" aria-selected="true">Reporte de dispositivos</button>
         </li>
     </ul>
 
@@ -110,6 +110,9 @@
                 <div class="col-sm-9">
 
                     <div class="card">
+                        <div class="card-header bg-white">
+                            <h5>Lista de accidentes</h5>
+                        </div>
                         <div class="card-body">
 
                             <div class="table-responsive">
@@ -203,6 +206,9 @@
                 <div class="col-sm-9">
 
                     <div class="card">
+                        <div class="card-header bg-white">
+                            <h5>Lista de dispositivos</h5>
+                        </div>
                         <div class="card-body">
 
                             <div class="table-responsive">
